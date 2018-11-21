@@ -21,6 +21,15 @@ def scrape():
     for date, ultag in zip(all_dates, list_of_movies):
         dates_dict = {}
         dates_dict['date'] = date.text
+        movies_per_date = []
+        list_of_lis = ultag.find_all('li')
+        for litag in list_of_lis:
+            movie = {}
+            movie['name'] = litag.get_text(strip=True).split('(')[0]
+            movie['url'] = 'https://www.imdb.com'+litag.a.get('href')
+            movie['imdb_id'] = litag.a.get('href').split('/')[2]
+            movies_per_date.append(movie)
+        dates_dict['movies'] = movies_per_date
         construct_response.append(dates_dict)
 
     return construct_response
