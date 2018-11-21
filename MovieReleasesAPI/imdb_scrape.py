@@ -26,7 +26,8 @@ def scrape():
         for litag in list_of_lis:
             movie = {}
             movie['name'] = litag.get_text(strip=True).split('(')[0]
-            movie['url'] = 'https://www.imdb.com'+litag.a.get('href')
+            movie['url'] = 'https://www.imdb.com' + \
+                litag.a.get('href').rsplit('/', 1)[0]
             movie['imdb_id'] = litag.a.get('href').split('/')[2]
             movies_per_date.append(movie)
         dates_dict['movies'] = movies_per_date
